@@ -1,3 +1,3 @@
 # Capstone-project-aml
 
-This is for test purpose only.
+Link to orthonet data : https://drive.google.com/file/d/1lxFlCPXoDjnpyZhusvrSb9nQ109kCWCb/view?usp=sharing
