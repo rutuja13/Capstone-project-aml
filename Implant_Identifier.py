@@ -27,13 +27,13 @@ import matplotlib.pyplot as plt
 from urllib.request import urlopen
 from PIL import Image
 
-import skimage.io
+#import skimage.io
 
 import torch
-from torch.utils.data import DataLoader
+#from torch.utils.data import DataLoader
 
 
-from data import CLASSES, format_prosthesis_name
+from data import CLASSES
 #from metrics import print_metrics
 #from plots import plot_confusion_matrix
 from datasets import OrthonetClassificationDataset
@@ -45,8 +45,8 @@ import temp_img
 
 # Paths
 CSV_TEST = "../CapstoneProject/archive/test.csv"
-MODEL_DIR = "../CapstoneProject/Orthonet_Models"
-DATA_PATH = "../CapstoneProject/archive/orthonet data/orthonet data new"
+#MODEL_DIR = "../CapstoneProject/Orthonet_Models"
+DATA_PATH = "../CapstoneProject/Sample images"
 
 
 
@@ -54,7 +54,6 @@ def prediction(image):
     DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
     BS_TEST = 4
     N_WORKERS = 1
-
 
     _, test_transforms = load_classifier_transforms()
     ds_test = OrthonetClassificationDataset('test', CSV_TEST, DATA_PATH, test_transforms)
@@ -64,11 +63,11 @@ def prediction(image):
 
    
     model_2d = CLASSIFIER_MODEL_GENERATORS["efficientnet"](n_in=1, n_out=len(CLASSES)).to(DEVICE)
-    model_2d.load_state_dict(torch.load("C:/Users/aksha/Desktop/CapstoneProject/Working/efficientnet_215_0.0944893.pt",map_location=torch.device('cpu'))['state_dict'])
+    model_2d.load_state_dict(torch.load("../CapstoneProject/Working/efficientnet_215_0.0944893.pt",map_location=torch.device('cpu'))['state_dict'])
     model_2d.eval()
 
 
-    unet_path = "C:/Users/aksha/Desktop/CapstoneProject/Working/seg_unet_192_0.9000270.pt"
+    unet_path = "../CapstoneProject/Working/seg_unet_192_0.9000270.pt"
     unet_model = get_unet(1, 1).to(DEVICE)
     unet_model.load_state_dict(torch.load(unet_path,map_location=torch.device('cpu'))['state_dict'])
     unet_model = unet_model.eval()
@@ -77,7 +76,7 @@ def prediction(image):
 
 
     model_seg = CLASSIFIER_MODEL_GENERATORS["wideresnet50"](n_in=2, n_out=len(CLASSES)).to(DEVICE)
-    model_seg.load_state_dict(torch.load("C:/Users/aksha/Desktop/CapstoneProject/Working/wideresnet50.pt",map_location=torch.device('cpu'))['state_dict'])
+    model_seg.load_state_dict(torch.load("../CapstoneProject/Working/wideresnet50.pt",map_location=torch.device('cpu'))['state_dict'])
     model_seg.to(DEVICE).eval()
 
 
@@ -107,7 +106,7 @@ def prediction(image):
         y_pred_segclassifier = model_seg(x)
         
         # Ensemble
-        ensemble_weight = 1
+        ensemble_weight = 3
         y_pred = ((torch.softmax(y_pred_segclassifier, dim=1)*ensemble_weight + torch.softmax(y_pred_classifier, dim=1)) / (1+ensemble_weight)).cpu().numpy()
 
 
@@ -143,10 +142,10 @@ def prediction(image):
 import requests
 import io
 #####################################################################################################################
-st.set_page_config(layout="wide", page_title = "Group Miners", page_icon = ":bone:, :bone:, :bone:" )
+st.set_page_config(layout="wide", page_title = "Group Miners" )
 hide_menu_style = """
         <style>
-        #MainMenu {visibility: hidden;}
+        #MainMenu {visibility: visible;}
         footer {visibility: visible;}
 
         </style>
@@ -159,8 +158,8 @@ st.markdown(hide_menu_style, unsafe_allow_html=True)
 from streamlit_option_menu import option_menu
 
 with st.sidebar:
-    selected = option_menu("Main Menu", ["Home", 'About Us'], 
-        icons=['house', 'gear'], menu_icon="cast", default_index=0)
+    selected = option_menu("Main Menu", ["Home", 'About Project','About Us'], 
+        icons=['house', 'gear', 'people'], menu_icon="cast", default_index=0)
 
 
 from streamlit_lottie import st_lottie_spinner
@@ -195,7 +194,6 @@ if selected  == "Home":
             im = Image.open(io.BytesIO(bytearray(temp_img.byte_storage)))
             im.save("C:/Users/aksha/Desktop/CapstoneProject/Temp_image/t.png")
             with st_lottie_spinner(lottie_json):
-
                 p1 = prediction("Temp_image/t.png")
                 print(p1)
                 c1,c12,c2,c23,c3 = st.columns([2,1,2,1,2])
@@ -221,7 +219,7 @@ if selected  == "Home":
             with a2:
                 st.image(title, use_column_width=True)
             im = Image.open(requests.get(title, stream=True).raw)
-            im.save("C:/Users/aksha/Desktop/CapstoneProject/Temp_image/t.png")
+            im.save("../CapstoneProject/Temp_image/t.png")
             with st_lottie_spinner(lottie_json):
                 p1 = prediction("Temp_image/t.png")
                 print(p1)
@@ -253,7 +251,7 @@ if selected == "About Us":
     col1, col2, col3 = st.columns([3, 1, 9])
     with col1:
 
-        st.image("A.png", use_column_width=True)
+        st.image("People/A.png", use_column_width=True)
 
     with col3:
         st.write("")
@@ -261,7 +259,7 @@ if selected == "About Us":
         st.write("")
         st.header("AKSHAR PATEL")
         st.write("")
-        st.subheader("I had completed my Bachleor's in Information Technology from Birla Vishvakarma Mahavidyalaya" +
+        st.subheader("I have completed my Bachleor's in Information Technology from Birla Vishvakarma Mahavidyalaya" +
                      " and currently pursuing Post-Graduation Certificate in Artificial Intelligence and Machine Learning. ")
     st.write("---")
 
@@ -272,18 +270,18 @@ if selected == "About Us":
        st.write("")
        st.header("ALBIN JOHN")
        st.write("")
-       st.subheader("I had completed my Bachleor's in Information Technology from Birla Vishvakarma Mahavidyalaya" + 
+       st.subheader("I had completed my _______________________________ from _____________________________  " + 
                     " and currently pursuing Post-Graduation Certificate in Artificial Intelligence and Machine Learning. ")
 
 
     with col6:
-        st.image("Al.png", use_column_width=True)
+        st.image("People/Al.png", use_column_width=True)
 
     st.write("---")
 
     col7, ccl8, col9 = st.columns([3, 1, 9])
     with col7:
-        st.image("G.png", use_column_width=True)
+        st.image("People/G.png", use_column_width=True)
 
     with col9:
         st.write("")
@@ -291,7 +289,7 @@ if selected == "About Us":
         st.write("")
         st.header("GAURAV NANDA")
         st.write("")
-        st.subheader("I had completed my Bachleor's in Information Technology from Birla Vishvakarma Mahavidyalaya" +
+        st.subheader("I have completed my Bachleor's in Aerospace with spl. in Avionics from UPES" +
                      " and currently pursuing Post-Graduation Certificate in Artificial Intelligence and Machine Learning.")
 
     st.write("---")
@@ -303,11 +301,11 @@ if selected == "About Us":
         st.write("")
         st.header("RUTUJA THATTE")
         st.write("")
-        st.subheader("I had completed my Bachleor's in Information Technology from Birla Vishvakarma Mahavidyalaya" +
+        st.subheader("I had completed my ______________________ from ________________________" +
                      " and currently pursuing Post-Graduation Certificate in Artificial Intelligence and Machine Learning.   ")
 
     with col12:
-        st.image("R.png", use_column_width=True)
+        st.image("People/R.png", use_column_width=True)
 
     hide_img_fs = '''
                     <style>
@@ -318,3 +316,21 @@ if selected == "About Us":
 
     st.markdown(hide_img_fs, unsafe_allow_html=True)
 
+if selected == 'About Project':
+    st.header("About Project")
+    st.write("")
+    st.write("")
+    st.write("---")
+    st.subheader("Classes")
+    st.caption('Knee_SmithAndNephew_Legion2')                           
+    st.caption('Knee_SmithAndNephew_GenesisII')                       
+    st.caption('Knee_ZimmerBiomet_Oxford')
+    st.caption('Knee_Depuy_Synthes_Sigma')                          
+    st.caption('Hip_SmithAndNephew_Polarstem_NilCol')               
+    st.caption('Hip_JRIOrtho_FurlongEvolution_NilCol')
+    st.caption('Hip_DepuySynthes_Corail_Collar')                    
+    st.caption('Hip_JRIOrtho_FurlongEvolution_Collar')              
+    st.caption('Hip_Stryker_AccoladeII')                            
+    st.caption('Hip_SmithAndNephew_Anthology')                      
+    st.caption('Hip_DepuySynthes_Corail_NilCol')                    
+    st.caption('Hip_Stryker_Exeter')         
