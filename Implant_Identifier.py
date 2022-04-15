@@ -179,7 +179,7 @@ lottie_json = data
 
 if selected  == "Home":
     p1 = []
-    st.title("Implant Identifier")
+    st.header("Implant Identifier")
     try:
         uploaded_image = st.file_uploader("Choose a file")
         title = st.text_input('Enter Image URL')
@@ -192,7 +192,7 @@ if selected  == "Home":
             with a2:
                 st.image(temp_img.byte_storage, caption='Uploaded X-ray', use_column_width= True)
             im = Image.open(io.BytesIO(bytearray(temp_img.byte_storage)))
-            im.save("C:/Users/aksha/Desktop/CapstoneProject/Temp_image/t.png")
+            im.save("../CapstoneProject/Temp_image/t.png")
             with st_lottie_spinner(lottie_json):
                 p1 = prediction("Temp_image/t.png")
                 print(p1)
@@ -244,8 +244,6 @@ if selected  == "Home":
 if selected == "About Us":
     st.header("WHO ARE WE . . . $Group Miners$")
     st.write("")
-    st.write("")
-    st.write("")
     st.write("---")
 
     col1, col2, col3 = st.columns([3, 1, 9])
@@ -259,7 +257,7 @@ if selected == "About Us":
         st.write("")
         st.header("AKSHAR PATEL")
         st.write("")
-        st.subheader("I have completed my Bachleor's in Information Technology from Birla Vishvakarma Mahavidyalaya" +
+        st.subheader("I have completed my Bachelor's in Information Technology from Birla Vishvakarma Mahavidyalaya" +
                      " and currently pursuing Post-Graduation Certificate in Artificial Intelligence and Machine Learning. ")
     st.write("---")
 
@@ -270,18 +268,18 @@ if selected == "About Us":
        st.write("")
        st.header("ALBIN JOHN")
        st.write("")
-       st.subheader("I had completed my _______________________________ from _____________________________  " + 
+       st.subheader("I had completed my Bachelor's in EC Engineering from Rajgiri School of Engineering  " + 
                     " and currently pursuing Post-Graduation Certificate in Artificial Intelligence and Machine Learning. ")
 
 
     with col6:
-        st.image("People/Al.png", use_column_width=True)
+        st.image("People/Al.jpg", use_column_width=True)
 
     st.write("---")
 
     col7, ccl8, col9 = st.columns([3, 1, 9])
     with col7:
-        st.image("People/G.png", use_column_width=True)
+        st.image("People/G.jpg", use_column_width=True)
 
     with col9:
         st.write("")
@@ -289,7 +287,7 @@ if selected == "About Us":
         st.write("")
         st.header("GAURAV NANDA")
         st.write("")
-        st.subheader("I have completed my Bachleor's in Aerospace with spl. in Avionics from UPES" +
+        st.subheader("I have completed my Bachelor's in Aerospace with spl. in Avionics from UPES" +
                      " and currently pursuing Post-Graduation Certificate in Artificial Intelligence and Machine Learning.")
 
     st.write("---")
@@ -301,11 +299,11 @@ if selected == "About Us":
         st.write("")
         st.header("RUTUJA THATTE")
         st.write("")
-        st.subheader("I had completed my ______________________ from ________________________" +
+        st.subheader("I had completed my BE of Computer Engineering from Nagpur University" +
                      " and currently pursuing Post-Graduation Certificate in Artificial Intelligence and Machine Learning.   ")
 
     with col12:
-        st.image("People/R.png", use_column_width=True)
+        st.image("People/R.jpg", use_column_width=True)
 
     hide_img_fs = '''
                     <style>
@@ -317,20 +315,27 @@ if selected == "About Us":
     st.markdown(hide_img_fs, unsafe_allow_html=True)
 
 if selected == 'About Project':
-    st.header("About Project")
-    st.write("")
+    st.header("$About Project$")
     st.write("")
     st.write("---")
+    st.subheader("Motivation For Project")
+    st.write("      As for the Third world countries, where the implantation techniques are still developing and the past prosthetics data was not well maintained, this project is developed to identify the Knee Implants and Hips Implants using the radiographs available.")
+    st.write(" Currently we are using this Model to identify the prothesis or Implants from the below mentioned Classes only.")
     st.subheader("Classes")
-    st.caption('Knee_SmithAndNephew_Legion2')                           
-    st.caption('Knee_SmithAndNephew_GenesisII')                       
-    st.caption('Knee_ZimmerBiomet_Oxford')
-    st.caption('Knee_Depuy_Synthes_Sigma')                          
-    st.caption('Hip_SmithAndNephew_Polarstem_NilCol')               
-    st.caption('Hip_JRIOrtho_FurlongEvolution_NilCol')
-    st.caption('Hip_DepuySynthes_Corail_Collar')                    
-    st.caption('Hip_JRIOrtho_FurlongEvolution_Collar')              
-    st.caption('Hip_Stryker_AccoladeII')                            
-    st.caption('Hip_SmithAndNephew_Anthology')                      
-    st.caption('Hip_DepuySynthes_Corail_NilCol')                    
-    st.caption('Hip_Stryker_Exeter')         
+    a1,a2,a3 = st.columns([3,3,2])
+    with a1:
+        st.write("$Knees - 4$")
+        st.caption('Knee_SmithAndNephew_Legion2')                           
+        st.caption('Knee_SmithAndNephew_GenesisII')                       
+        st.caption('Knee_ZimmerBiomet_Oxford')
+        st.caption('Knee_Depuy_Synthes_Sigma')                          
+    with a2:    
+        st.write("$Hips - 8$")
+        st.caption('Hip_SmithAndNephew_Polarstem_NilCol')               
+        st.caption('Hip_JRIOrtho_FurlongEvolution_NilCol')
+        st.caption('Hip_DepuySynthes_Corail_Collar')                    
+        st.caption('Hip_JRIOrtho_FurlongEvolution_Collar')              
+        st.caption('Hip_Stryker_AccoladeII')                            
+        st.caption('Hip_SmithAndNephew_Anthology')                      
+        st.caption('Hip_DepuySynthes_Corail_NilCol')                    
+        st.caption('Hip_Stryker_Exeter')         
